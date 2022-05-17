@@ -7,7 +7,7 @@ import java.awt.*;
  */
 public enum ChessColor {
     BLACK("Black", Color.BLACK), WHITE("White", Color.WHITE), NONE("No Player", Color.WHITE);
-
+int a=0;
     private final String name;
     private final Color color;
 
