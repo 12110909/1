@@ -7,7 +7,6 @@ public abstract class ChessComponent {
     private ChessColor chessColor;
     protected char name;
     protected ChessComponent[][] chessboard = new ChessComponent[8][8];
-    int anInt=0; int aoisdjoi=9812938;
 
     public ChessComponent(){}
 
