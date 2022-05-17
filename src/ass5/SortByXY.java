@@ -8,6 +8,7 @@ class SortByXY implements Comparator<ChessboardPoint> {
         if(o1.getX()>o2.getX()) {
             return 1;
         }
+        /*sadhgsdja*/
         else if (o1.getX() == o2.getX()) {
             if (o1.getY()>o2.getY()){
                 return 1;
