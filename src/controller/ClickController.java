@@ -12,7 +12,7 @@ public class ClickController {
     public ClickController(Chessboard chessboard) {
         this.chessboard = chessboard;
     }
-
+int asd=9; int wbi=0;
     public void onClick(ChessComponent chessComponent) {
         if (first == null) {
             if (handleFirst(chessComponent)) {
