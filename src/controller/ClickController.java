@@ -7,11 +7,11 @@ import view.Chessboard;
 public class ClickController {
     private final Chessboard chessboard;
     private ChessComponent first;
-    int a;int b;
+
     public ClickController(Chessboard chessboard) {
         this.chessboard = chessboard;
     }
-int asd=9; int wbi=0;
+
     public void onClick(ChessComponent chessComponent) {
         if (first == null) {
             if (handleFirst(chessComponent)) {
