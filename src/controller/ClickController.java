@@ -7,7 +7,7 @@ import view.Chessboard;
 public class ClickController {
     private final Chessboard chessboard;
     private ChessComponent first;
-    int a;int b;
+    int a;int b;int c;
 
     public ClickController(Chessboard chessboard) {
         this.chessboard = chessboard;
