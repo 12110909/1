@@ -11,9 +11,8 @@ public class Piece extends BasePiece {
         JU,
         MA,
         XIANG,
-        SHI,
-        SHUAI,
-        PAO,
+        HOU,
+        WANG,
         BING
     }
 
@@ -22,7 +21,7 @@ public class Piece extends BasePiece {
 
     public Piece(int x, int y, PieceType type, Color color) {
         super(x, y);
-        this.type = type;
+        this.type = type;  //类型//
         this.color = color;
     }
 
@@ -38,7 +37,7 @@ public class Piece extends BasePiece {
         ArrayList<Point2D> result = new ArrayList<>();
         switch (type) {
             case JU:
-                for (int i = y + 1; i < 10; i++) {
+                for (int i = y + 1; i < 8; i++) {
                     if (checkBoardPosition(x, i) == color) break;
                     result.add(new Point2D(x, i));
                     if (checkBoardPosition(x, i) != Color.NULL) break;
@@ -48,7 +47,7 @@ public class Piece extends BasePiece {
                     result.add(new Point2D(x, i));
                     if (checkBoardPosition(x, i) != Color.NULL) break;
                 }
-                for (int i = x + 1; i < 9; i++) {
+                for (int i = x + 1; i < 8; i++) {
                     if (checkBoardPosition(i, y) == color) break;
                     result.add(new Point2D(i, y));
                     if (checkBoardPosition(i, y) != Color.NULL) break;
@@ -71,12 +70,12 @@ public class Piece extends BasePiece {
                 break;
             case BING:
                 if (color == Color.BLACK) {
+                    if ()
                     result.add(new Point2D(x, y - 1));
-                    if (y < 5) {
-                        result.add(new Point2D(x - 1, y));
-                        result.add(new Point2D(x + 1, y));
-                    }
-                } else if (color == Color.RED) {
+
+
+
+                } else if (color == Color.WHITE) {
                     result.add(new Point2D(x, y + 1));
                     if (y > 4) {
                         result.add(new Point2D(x - 1, y));
@@ -85,20 +84,28 @@ public class Piece extends BasePiece {
                 }
                 break;
             case XIANG:
-                result.add(new Point2D(x + 2, y + 2));
-                result.add(new Point2D(x + 2, y - 2));
-                result.add(new Point2D(x - 2, y + 2));
-                result.add(new Point2D(x - 2, y - 2));
-                result.removeIf(p -> {
-                    if (color == Color.RED) {
-                        return p.y > 4;
-                    } else {
-                        return p.y < 5;
-                    }
-                });
-                break;
+                for (int i = 0; i < 8; i++) {
+                    if (checkBoardPosition(x+i,y+i) == color) break;
+                    result.add(new Point2D(x+i,y+i));
+                    if (checkBoardPosition(x+i,y+i) != Color.NULL) break;
+                }
+                for (int i = 0; i < 8; i++) {
+                    if (checkBoardPosition(x-i,y+i) == color) break;
+                    result.add(new Point2D(x-i,y+i));
+                    if (checkBoardPosition(x-i,y+i) != Color.NULL) break;
+                }
+                for (int i = 0; i < 8; i++) {
+                    if (checkBoardPosition(x+i,y-i) == color) break;
+                    result.add(new Point2D(x+i,y-i));
+                    if (checkBoardPosition(x+i,y-i) != Color.NULL) break;
+                }
+                for (int i = 0; i < 8; i++) {
+                    if (checkBoardPosition(x - i, y - i) == color) break;
+                    result.add(new Point2D(x - i, y - i));
+                    if (checkBoardPosition(x - i, y - i) != Color.NULL) break;
+                }
         }
-        result.removeIf(p -> p.x < 0 || p.x >= 9 || p.y < 0 || p.y >= 10);
+        result.removeIf(p -> p.x < 0 || p.x >= 8 || p.y < 0 || p.y >= 8);
         result.removeIf(p -> checkBoardPosition(p.x, p.y) == color);
         return result;
     }
