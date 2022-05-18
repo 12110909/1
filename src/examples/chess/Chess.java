@@ -38,7 +38,7 @@ public class Chess {
     public static void main(String[] args) {
         View.window.setSize(1024, 768);
         Game.setMaximumPlayer(2);
-        View.setName("Chess");
+        View.setName("Chess Game");
         Game.setBoardSize(9, 10);
         Game.saver.checkSize(true); // 读档时检查存档棋盘大小
         Game.saver.setSlotNumber(5); // 存档数量
@@ -181,8 +181,8 @@ public class Chess {
         });
         try {
             // 设置背景图片。BoardView有个构造函数支持直接设置。其他所有JPanel都是魔改过的，可以直接加图片。
-            Image image = ImageIO.read(new File("chess/chessImage.jpg"));
-            Image image2 = ImageIO.read(new File("chess/chessImage2.jpg"));
+            Image image = ImageIO.read(new File("chessImage.jpg"));
+            Image image2 = ImageIO.read(new File("chessImage.jpg"));
             View.setBoardViewPattern(() -> new BoardView(image) {});
             MenuStage.instance().setBackgroundImage(image2);
         } catch (IOException e) {
