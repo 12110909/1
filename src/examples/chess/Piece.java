@@ -190,7 +190,6 @@ public class Piece extends BasePiece {
                 result.add(new Point2D(x + 1, y ));
             }
         }
-        int c=0;
         result.removeIf(p -> p.x < 0 || p.x >= 8 || p.y < 0 || p.y >= 8);
         result.removeIf(p -> checkBoardPosition(p.x, p.y) == color);
         return result;
