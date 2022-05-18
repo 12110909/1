@@ -27,6 +27,7 @@ public class MenuStage extends BaseStage {
         title.setHorizontalAlignment(SwingConstants.CENTER);
         settings.setVisible(false);
 
+
         newGame.addActionListener((e) -> View.changeStage("RoomStage"));
         load.addActionListener((e) -> View.changeStage("LoadStage"));
         rank.addActionListener((e) -> View.changeStage("RankingStage"));
