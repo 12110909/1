@@ -155,7 +155,7 @@ public class Chess {
 
 
         // 胜利条件：刚才被吃的是将/帅，则吃子的玩家赢
-        Game.setPlayerWinningJudge((player -> lastRemovedPieceType == Piece.PieceType.SHUAI
+        Game.setPlayerWinningJudge((player -> lastRemovedPieceType == Piece.PieceType.WANG
                 && Game.getCurrentPlayerIndex() == player.getId()));
 
         // 判断游戏结束条件。默认条件是任意一方胜利，但由于和棋规则，这里多判断了当前玩家无棋可走。
@@ -243,7 +243,7 @@ public class Chess {
                 if (grid.hasPiece()) { // 绘制棋子，这里直接写文字了。加图片建议用JLabel的Icon。
                     Piece piece = (Piece) grid.getOwnedPiece();
                     this.label.setText(piece.getType().name());
-                    if (piece.getColor() == Color.RED)
+                    if (piece.getColor() == Color.WHITE)
                         this.label.setForeground(java.awt.Color.RED);
                     else
                         this.label.setForeground(java.awt.Color.BLACK);
