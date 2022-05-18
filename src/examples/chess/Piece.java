@@ -70,7 +70,7 @@ public class Piece extends BasePiece {
                 break;
             case BING:
                 if (color == Color.BLACK) {
-
+                    if ()
                     result.add(new Point2D(x, y - 1));
 
 
