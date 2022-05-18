@@ -1,4 +1,4 @@
-package examples.chinesechess;
+package examples.chess;
 
 import frame.Controller.Game;
 import frame.action.Action;
@@ -38,13 +38,13 @@ public class Chess {
     public static void main(String[] args) {
         View.window.setSize(1024, 768);
         Game.setMaximumPlayer(2);
-        View.setName("Chinese Chess");
+        View.setName("Chess");
         Game.setBoardSize(9, 10);
         Game.saver.checkSize(true); // 读档时检查存档棋盘大小
         Game.saver.setSlotNumber(5); // 存档数量
 
-//        AudioPlayer.playBgm("src/main/resources/aaa.mp3"); //播放bgm
-//        GameStage.instance().setBgm("src/main/resources/aaa.mp3"); // 在进入GameStage时播放bgm
+        AudioPlayer.playBgm("chess.mp3"); //播放bgm
+        GameStage.instance().setBgm("chess.mp3"); // 在进入GameStage时播放bgm
 
         Game.registerBoard(Board.class);
 
@@ -74,7 +74,7 @@ public class Chess {
                             availablePositions = piece.getAvailablePositions(); // 拿所有能走的格子，存到全局变量
                             selectedPiece = piece; // 全局变量存被选中的棋子
                             isSelecting = true;
-//                            AudioPlayer.playSound("src/main/resources/bbb.mp3"); //点击音效
+                            AudioPlayer.playSound("qizi.mp3"); //点击音效
                             return ActionPerformType.PENDING; // 执行结果为PENDING，玩家这一步对棋盘没有更改，需要之后的Action
                             // 撤销或者FAIL时会把之前所有的PENDING都撤掉，详见文档
                         } else { // 选中棋子的时候
@@ -89,7 +89,7 @@ public class Chess {
                                     }
                                     selectedPiece = null; // 清理全局变量
                                     availablePositions.clear();
-//                                    AudioPlayer.playSound("src/main/resources/ccc.mp3"); //点击音效
+                                    AudioPlayer.playSound("qizi.mp3"); //点击音效
                                     return ActionPerformType.SUCCESS; // Action执行成功
                                 }
                             }
@@ -155,10 +155,8 @@ public class Chess {
 
 
         // 胜利条件：刚才被吃的是将/帅，则吃子的玩家赢
-        Game.setPlayerWinningJudge((player -> {
-            return lastRemovedPieceType == Piece.PieceType.SHUAI
-                    && Game.getCurrentPlayerIndex() == player.getId();
-        }));
+        Game.setPlayerWinningJudge((player -> lastRemovedPieceType == Piece.PieceType.SHUAI
+                && Game.getCurrentPlayerIndex() == player.getId()));
 
         // 判断游戏结束条件。默认条件是任意一方胜利，但由于和棋规则，这里多判断了当前玩家无棋可走。
         // 判断方式很暴力，遍历了棋盘，找到下一名玩家的所有棋子，判断棋子是不是全都动不了。
@@ -183,8 +181,8 @@ public class Chess {
         });
         try {
             // 设置背景图片。BoardView有个构造函数支持直接设置。其他所有JPanel都是魔改过的，可以直接加图片。
-            Image image = ImageIO.read(new File("src/main/resources/bg.jpeg"));
-            Image image2 = ImageIO.read(new File("src/main/resources/bg2.jpg"));
+            Image image = ImageIO.read(new File("chess/chessImage.jpg"));
+            Image image2 = ImageIO.read(new File("chess/chessImage2.jpg"));
             View.setBoardViewPattern(() -> new BoardView(image) {});
             MenuStage.instance().setBackgroundImage(image2);
         } catch (IOException e) {
@@ -201,7 +199,7 @@ public class Chess {
                     @Override
                     public void mouseEntered(MouseEvent e) {
                         super.mouseEntered(e);
-                        setBackground(new java.awt.Color(255, 255, 150)); //高亮背景色
+                        setBackground(new java.awt.Color(252, 231, 81)); //高亮背景色
                         setOpaque(true); // 背景设置为不透明
                         revalidate(); // 这两行建议在改ui之后都加。。
                         repaint();

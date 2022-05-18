@@ -1,4 +1,4 @@
-package examples.chinesechess;
+package examples.chess;
 
 import frame.board.BaseGrid;
 

@@ -1,4 +1,4 @@
-package examples.chinesechess;
+package examples.chess;
 
 public enum Color {
     BLACK,
