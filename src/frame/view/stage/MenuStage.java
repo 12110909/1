@@ -4,8 +4,10 @@ package frame.view.stage;
 import frame.view.View;
 import frame.view.components.BackgroundImagePanel;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class MenuStage extends BaseStage {
     private static volatile MenuStage sInstance = null;
@@ -27,13 +29,11 @@ public class MenuStage extends BaseStage {
         title.setHorizontalAlignment(SwingConstants.CENTER);
         settings.setVisible(false);
 
-
         newGame.addActionListener((e) -> View.changeStage("RoomStage"));
         load.addActionListener((e) -> View.changeStage("LoadStage"));
         rank.addActionListener((e) -> View.changeStage("RankingStage"));
         settings.addActionListener((e) -> View.changeStage("SettingStage"));
         quit.addActionListener((e) -> View.window.dispose());
-
 
 
         drawComponents = () -> {

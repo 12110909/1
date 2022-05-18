@@ -181,13 +181,14 @@ public class Chess {
         });
         try {
             // 设置背景图片。BoardView有个构造函数支持直接设置。其他所有JPanel都是魔改过的，可以直接加图片。
-            Image image = ImageIO.read(new File("chessImage.jpg"));
-            Image image2 = ImageIO.read(new File("chessImage.jpg"));
+            Image image = ImageIO.read(new File("src/examples/chess/chessImage.jpg"));
+            Image image2 = ImageIO.read(new File("src/examples/chess/chessImage.jpg"));
             View.setBoardViewPattern(() -> new BoardView(image) {});
             MenuStage.instance().setBackgroundImage(image2);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
         View.setGridViewPattern(() -> new GridPanelView() {
             boolean isHighLighted = false, hasMouseEntered = false;
