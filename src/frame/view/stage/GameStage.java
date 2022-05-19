@@ -34,7 +34,7 @@ public class GameStage extends BaseStage {
 
     public SaveDialog saveDialog = null;
 
-    private GridView[][] grids;
+    private  GridView[][] grids;
 
     private boolean enableClick = true;
 

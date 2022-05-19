@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 public class Piece extends BasePiece {
     public enum PieceType {
-        JU,//
-        MA,//
-        XIANG,//
+        JU,
+        MA,
+        XIANG,
         HOU,
         WANG,
-        BING//
+        BING
     }
 
     private PieceType type;

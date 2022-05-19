@@ -2,12 +2,14 @@ package frame.view.stage;
 
 
 import frame.view.View;
+import frame.view.board.BoardView;
 import frame.view.components.BackgroundImagePanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 
 public class MenuStage extends BaseStage {
     private static volatile MenuStage sInstance = null;
@@ -17,6 +19,8 @@ public class MenuStage extends BaseStage {
     public JButton load = new JButton("Load");
     public JButton settings = new JButton("Settings");
     public JButton rank = new JButton("Ranking");
+    public JButton skin = new JButton("Change Skin");
+    public JButton skin1 = new JButton("Reset Skin");
     public JButton quit = new JButton("Quit");
 
     public Box buttonPanel = new Box(BoxLayout.Y_AXIS);
@@ -26,6 +30,7 @@ public class MenuStage extends BaseStage {
         super("MenuStage");
         setLayout(new BorderLayout());
         title.setFont(new Font("Arial", Font.PLAIN, 100));
+        title.setForeground(new Color(222, 252, 34));
         title.setHorizontalAlignment(SwingConstants.CENTER);
         settings.setVisible(false);
 
@@ -34,7 +39,6 @@ public class MenuStage extends BaseStage {
         rank.addActionListener((e) -> View.changeStage("RankingStage"));
         settings.addActionListener((e) -> View.changeStage("SettingStage"));
         quit.addActionListener((e) -> View.window.dispose());
-
 
         drawComponents = () -> {
             this.add(dummyPanel);
@@ -47,6 +51,10 @@ public class MenuStage extends BaseStage {
             buttonPanel.add(rank);
             buttonPanel.add(Box.createVerticalStrut(10));
             buttonPanel.add(settings);
+            buttonPanel.add(Box.createVerticalStrut(10));
+            buttonPanel.add(skin);
+            buttonPanel.add(Box.createVerticalStrut(10));
+            buttonPanel.add(skin1);
             buttonPanel.add(Box.createVerticalStrut(40));
             buttonPanel.add(quit);
             buttonPanel.add(Box.createVerticalGlue());

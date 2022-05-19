@@ -2,11 +2,12 @@ package frame.view.board;
 
 import frame.Controller.Game;
 import frame.board.BaseGrid;
+import frame.view.components.BackgroundImagePanel;
 
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class GridPanelView extends JPanel implements GridView {
+public abstract class GridPanelView extends BackgroundImagePanel implements GridView {
 
     public final JLabel label = new JLabel();
 

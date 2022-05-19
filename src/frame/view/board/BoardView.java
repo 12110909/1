@@ -17,6 +17,7 @@ public class BoardView extends JPanel {
         super(new GridBagLayout());
         image = background;
         this.setOpaque(false);
+        repaint();
     }
 
     public void init() {

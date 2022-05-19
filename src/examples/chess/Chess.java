@@ -13,20 +13,17 @@ import frame.view.board.BoardView;
 import frame.view.board.GridPanelView;
 import frame.view.components.BackgroundImagePanel;
 import frame.view.sound.AudioPlayer;
-import frame.view.stage.GameStage;
-import frame.view.stage.MenuStage;
+import frame.view.stage.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
-// 建议在阅读FIR那个例子后再看这个。
-// 这是个实现了一部分棋子功能的象棋，并且加了一些视觉效果。
 
 public class Chess {
     // 全局变量
@@ -34,17 +31,36 @@ public class Chess {
     public static Piece selectedPiece = null; // 选中的棋子
     public static ArrayList<Point2D> availablePositions = new ArrayList<>(); // 所有能走的格子位置
     public static Piece.PieceType lastRemovedPieceType; // 上一个被吃的子
+    public static Image bb1,bw1,kb1,kw1,nb1,nw1,pb1,pw1,qb1,qw1,rb1,rw1;
+
+    static {
+        try {
+            bb1 = ImageIO.read(new File("src/examples/chess/ChessGrids/bishop-black.png"));
+            bw1=ImageIO.read(new File("src/examples/chess/ChessGrids/bishop-white.png"));
+            kb1=ImageIO.read(new File("src/examples/chess/ChessGrids/king-black.png"));
+            kw1=ImageIO.read(new File("src/examples/chess/ChessGrids/king-white.png"));
+            nb1=ImageIO.read(new File("src/examples/chess/ChessGrids/knight-black.png"));
+            nw1=ImageIO.read(new File("src/examples/chess/ChessGrids/knight-white.png"));
+            pb1=ImageIO.read(new File("src/examples/chess/ChessGrids/pawn-black.png"));
+            pw1=ImageIO.read(new File("src/examples/chess/ChessGrids/pawn-white.png"));
+            qb1=ImageIO.read(new File("src/examples/chess/ChessGrids/queen-black.png"));
+            qw1=ImageIO.read(new File("src/examples/chess/ChessGrids/queen-white.png"));
+            rb1=ImageIO.read(new File("src/examples/chess/ChessGrids/rook-black.png"));
+            rw1=ImageIO.read(new File("src/examples/chess/ChessGrids/rook-white.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void main(String[] args) {
         View.window.setSize(1024, 768);
         Game.setMaximumPlayer(2);
         View.setName("Chess Game");
-        Game.setBoardSize(9, 10);
+        Game.setBoardSize(8, 8);
         Game.saver.checkSize(true); // 读档时检查存档棋盘大小
         Game.saver.setSlotNumber(5); // 存档数量..
 
-        AudioPlayer.playBgm("chess.mp3"); //播放bgm
-        GameStage.instance().setBgm("chess.mp3"); // 在进入GameStage时播放bgm
+//        AudioPlayer.playBgm("src/examples/chess/chess.wav");
 
         Game.registerBoard(Board.class);
 
@@ -74,7 +90,7 @@ public class Chess {
                             availablePositions = piece.getAvailablePositions(); // 拿所有能走的格子，存到全局变量
                             selectedPiece = piece; // 全局变量存被选中的棋子
                             isSelecting = true;
-                            AudioPlayer.playSound("qizi.mp3"); //点击音效
+                            AudioPlayer.playSound("src/examples/chess/qizi.wav"); //点击音效
                             return ActionPerformType.PENDING; // 执行结果为PENDING，玩家这一步对棋盘没有更改，需要之后的Action
                             // 撤销或者FAIL时会把之前所有的PENDING都撤掉，详见文档
                         } else { // 选中棋子的时候
@@ -89,7 +105,7 @@ public class Chess {
                                     }
                                     selectedPiece = null; // 清理全局变量
                                     availablePositions.clear();
-                                    AudioPlayer.playSound("qizi.mp3"); //点击音效
+                                    AudioPlayer.playSound("src/examples/chess/qizi.wav"); //点击音效
                                     return ActionPerformType.SUCCESS; // Action执行成功
                                 }
                             }
@@ -123,37 +139,6 @@ public class Chess {
             return null; // 其他鼠标按键返回null
         });
 
-        // 加一个按钮，可以把兵变成🏇。我也不知道为什么要加这个(
-        BackgroundImagePanel sidePanel = new BackgroundImagePanel();
-        JButton someButton = new JButton("Promotion");
-        someButton.addActionListener((e) -> { // 手动写一个按钮，按下时调用Game.performAction，然后继承一个Action传进去
-            Game.performAction(new Action(true) {
-                Piece changedPiece = null; // 记录被升变的棋子
-                @Override
-                public ActionPerformType perform() {
-                    if (!isSelecting) return ActionPerformType.FAIL; // 没选中或不是兵返回FAIL
-                    if (selectedPiece.getType() != Piece.PieceType.BING) {
-                        selectedPiece = null; // 清理全局变量
-                        availablePositions.clear();
-                        return ActionPerformType.FAIL;
-                    }
-                    changedPiece = selectedPiece; // 记录改变的棋子，方便撤回
-                    selectedPiece.setType(Piece.PieceType.MA); // 改变type
-                    selectedPiece = null; // 清理全局变量
-                    availablePositions.clear();
-                    return ActionPerformType.SUCCESS;
-                }
-
-                @Override
-                public void undo() {
-                    changedPiece.setType(Piece.PieceType.BING); // 把记下来的棋子改回兵
-                }
-            });
-        });
-        sidePanel.add(someButton);
-        GameStage.instance().add("East", sidePanel); // GameStage的布局管理器是BorderPanel，可以在东西南北添加Panel。框架在南北提供了两个，这里是在东边添加。
-
-
         // 胜利条件：刚才被吃的是将/帅，则吃子的玩家赢
         Game.setPlayerWinningJudge((player -> lastRemovedPieceType == Piece.PieceType.WANG
                 && Game.getCurrentPlayerIndex() == player.getId()));
@@ -180,14 +165,48 @@ public class Chess {
             return true;
         });
         try {
-            // 设置背景图片。BoardView有个构造函数支持直接设置。其他所有JPanel都是魔改过的，可以直接加图片。
-            Image image = ImageIO.read(new File("src/examples/chess/chessImage.jpg"));
+            Image image = ImageIO.read(new File("src/examples/chess/chessBoard(1).jpg"));
             Image image2 = ImageIO.read(new File("src/examples/chess/chessImage.jpg"));
             View.setBoardViewPattern(() -> new BoardView(image) {});
             MenuStage.instance().setBackgroundImage(image2);
+            LoadStage.instance().setBackgroundImage(image2);
+            GameStage.instance().setBackgroundImage(image2);
+            RankingStage.instance().setBackgroundImage(image2);
+            RoomStage.instance().setBackgroundImage(image2);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        MenuStage.instance().skin.addActionListener((ex)->{
+            try {
+                Image image1 = ImageIO.read(new File("src/examples/chess/chessBoard.jpg"));
+                Image image2 = ImageIO.read(new File("src/examples/chess/chessImage2.jpg"));
+                MenuStage.instance().setBackgroundImage(image2);
+                LoadStage.instance().setBackgroundImage(image2);
+                GameStage.instance().setBackgroundImage(image2);
+                RankingStage.instance().setBackgroundImage(image2);
+                RoomStage.instance().setBackgroundImage(image2);
+                View.setBoardViewPattern(() -> new BoardView(image1) {});
+                View.window.setSize(1024, 769);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        MenuStage.instance().skin1.addActionListener((ex)->{
+            try {
+                Image image1 = ImageIO.read(new File("src/examples/chess/chessBoard(1).jpg"));
+                Image image2 = ImageIO.read(new File("src/examples/chess/chessImage.jpg"));
+                MenuStage.instance().setBackgroundImage(image2);
+                LoadStage.instance().setBackgroundImage(image2);
+                GameStage.instance().setBackgroundImage(image2);
+                RankingStage.instance().setBackgroundImage(image2);
+                RoomStage.instance().setBackgroundImage(image2);
+                View.setBoardViewPattern(() -> new BoardView(image1) {});
+                View.window.setSize(1024, 770);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
 
 
         View.setGridViewPattern(() -> new GridPanelView() {
@@ -245,7 +264,8 @@ public class Chess {
                     Piece piece = (Piece) grid.getOwnedPiece();
                     this.label.setText(piece.getType().name());
                     if (piece.getColor() == Color.WHITE)
-                        this.label.setForeground(java.awt.Color.RED);
+                    {
+                        this.setBackgroundImage(bb1);}
                     else
                         this.label.setForeground(java.awt.Color.BLACK);
                 } else {
