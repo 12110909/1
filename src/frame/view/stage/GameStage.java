@@ -28,9 +28,8 @@ public class GameStage extends BaseStage {
     public final BackgroundImagePanel scoreBoard = new BackgroundImagePanel();
 
     public final JButton menuButton = new JButton("Menu");
-    public final JButton undoButton = new JButton("Undo");
+    public final JButton undoButton = new JButton("Withdraw");
     public final JButton saveButton = new JButton("Save");
-    public final JButton surrenderButton = new JButton("Surrender");
 
     public SaveDialog saveDialog = null;
 
@@ -57,7 +56,6 @@ public class GameStage extends BaseStage {
 
         menuButton.addActionListener((e) -> View.changeStage("MenuStage"));
         undoButton.addActionListener((e) -> Game.cancelLastAction());
-        surrenderButton.addActionListener(e -> Game.getCurrentPlayer().surrender());
 
         drawComponents = () -> {
             menuBar.add(menuButton);
