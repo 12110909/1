@@ -262,14 +262,28 @@ public class Chess {
                 repaint();
                 if (grid.hasPiece()) { // 绘制棋子，这里直接写文字了。加图片建议用JLabel的Icon。
                     Piece piece = (Piece) grid.getOwnedPiece();
-                    this.label.setText(piece.getType().name());
-                    if (piece.getColor() == Color.WHITE)
-                    {
-                        this.setBackgroundImage(bb1);}
-                    else
-                        this.label.setForeground(java.awt.Color.BLACK);
+                    if (piece.getColor() == Color.BLACK) {
+                        switch (piece.getType()) {
+                            case JU -> this.setBackgroundImage(rb1);
+                            case MA -> this.setBackgroundImage(nb1);
+                            case BING -> this.setBackgroundImage(pb1);
+                            case WANG -> this.setBackgroundImage(kb1);
+                            case XIANG -> this.setBackgroundImage(bb1);
+                            case HOU -> this.setBackgroundImage(qb1);
+                        }
+                    }
+                    else{
+                        switch (piece.getType()) {
+                            case HOU -> this.setBackgroundImage(qw1);
+                            case XIANG -> this.setBackgroundImage(bw1);
+                            case WANG -> this.setBackgroundImage(kw1);
+                            case BING -> this.setBackgroundImage(pw1);
+                            case MA -> this.setBackgroundImage(nw1);
+                            case JU -> this.setBackgroundImage(rw1);
+                        }
+                    }
                 } else {
-                    this.label.setText("");
+                    this.setBackgroundImage(null);
                 }
             }
         });
@@ -306,7 +320,6 @@ public class Chess {
             stage.menuBar.add(stage.menuButton);
             stage.menuBar.add(stage.saveButton);
             stage.menuBar.add(stage.undoButton);
-            stage.menuBar.add(stage.surrenderButton);
             stage.scoreBoard.add(currentPlayerLabel);
             stage.add("North", stage.menuBar);
             stage.add("South", stage.scoreBoard);
