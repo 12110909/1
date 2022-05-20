@@ -35,7 +35,7 @@ public class Chess {
 
     static {
         try {
-            bb1 = ImageIO.read(new File("src/examples/chess/ChessGrids/bishop-black.png"));
+            bb1=ImageIO.read(new File("src/examples/chess/ChessGrids/bishop-black.png"));
             bw1=ImageIO.read(new File("src/examples/chess/ChessGrids/bishop-white.png"));
             kb1=ImageIO.read(new File("src/examples/chess/ChessGrids/king-black.png"));
             kw1=ImageIO.read(new File("src/examples/chess/ChessGrids/king-white.png"));
