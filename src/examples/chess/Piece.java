@@ -73,14 +73,14 @@ public class Piece extends BasePiece {
             case BING: {
                 if (color == Color.BLACK) {
                     if (y == 1) {
-                        if (checkBoardPosition(x, y + 1) != Color.NULL) {
+                        if (checkBoardPosition(x, y + 1) ==Color.NULL) {
                             result.add(new Point2D(x, y + 1));
-                            if (checkBoardPosition(x, y + 2) != Color.NULL) {
+                            if (checkBoardPosition(x,y+2)==Color.NULL){
                                 result.add(new Point2D(x, y + 2));
                             }
                         }
                     } else {
-                        if (checkBoardPosition(x, y + 1) != Color.NULL) {
+                        if (checkBoardPosition(x, y + 1) ==Color.NULL) {
                             result.add(new Point2D(x, y + 1));
                         }
                     }
@@ -94,14 +94,15 @@ public class Piece extends BasePiece {
 
                 } else if (color == Color.WHITE) {
                     if (y == 6) {
-                        if (checkBoardPosition(x, y - 1) != Color.NULL) {
+                        if (checkBoardPosition(x, y - 1) ==Color.NULL) {
                             result.add(new Point2D(x, y - 1));
-                            if (checkBoardPosition(x, y - 2) != Color.NULL) {
+                            if (checkBoardPosition(x, y - 2) ==Color.NULL) {
                                 result.add(new Point2D(x, y - 2));
                             }
+
                         }
                     } else {
-                        if (checkBoardPosition(x, y - 1) != Color.NULL) {
+                        if (checkBoardPosition(x, y - 1) == Color.NULL) {
                             result.add(new Point2D(x, y - 1));
                         }
                     }
@@ -111,31 +112,39 @@ public class Piece extends BasePiece {
                     if (x < 7 && checkBoardPosition(x + 1, y - 1) == Color.BLACK) {
                         result.add(new Point2D(x + 1, y - 1));
                     }
+                    break;
                 }
-
-                break;
             }
             case XIANG: {
-                for (int i = 0; i < 8; i++) {
-                    if (checkBoardPosition(x + i, y + i) == color) break;
+                int i =1;
+                while (x+i<8&&y+i<8) {
+                    if (checkBoardPosition(x+i,y+i) == color)break;
                     result.add(new Point2D(x + i, y + i));
-                    if (checkBoardPosition(x + i, y + i) != Color.NULL) break;
+                    if (checkBoardPosition(x+i,y+i)!=Color.NULL)break;
+                    i++;
                 }
-                for (int i = 0; i < 8; i++) {
-                    if (checkBoardPosition(x - i, y + i) == color) break;
+                i=1;
+                while (x-i>=0&&y+i<8) {
+                    if (checkBoardPosition(x-i,y+i) == color)break;
                     result.add(new Point2D(x - i, y + i));
-                    if (checkBoardPosition(x - i, y + i) != Color.NULL) break;
+                    if (checkBoardPosition(x-i,y+i)!=Color.NULL)break;
+                    i++;
                 }
-                for (int i = 0; i < 8; i++) {
-                    if (checkBoardPosition(x + i, y - i) == color) break;
-                    result.add(new Point2D(x + i, y - i));
-                    if (checkBoardPosition(x + i, y - i) != Color.NULL) break;
-                }
-                for (int i = 0; i < 8; i++) {
-                    if (checkBoardPosition(x - i, y - i) == color) break;
+                i=1;
+                while (x-i>=0&&y-i>=0) {
+                    if (checkBoardPosition(x-i,y-i) == color)break;
                     result.add(new Point2D(x - i, y - i));
-                    if (checkBoardPosition(x - i, y - i) != Color.NULL) break;
+                    if (checkBoardPosition(x-i,y-i)!=Color.NULL)break;
+                    i++;
                 }
+                i=1;
+                while (x+i<8&&y-i>=0) {
+                    if (checkBoardPosition(x+i,y-i) == color)break;
+                    result.add(new Point2D(x + i, y - i));
+                    if (checkBoardPosition(x+i,y-i)!=Color.NULL)break;
+                    i++;
+                }
+                break;
             }
             case HOU:{
                 for (int i = y + 1; i < 8; i++) {
@@ -158,26 +167,35 @@ public class Piece extends BasePiece {
                     result.add(new Point2D(i, y));
                     if (checkBoardPosition(i, y) != Color.NULL) break;
                 }
-                for (int i = 0; i < 8; i++) {
-                    if (checkBoardPosition(x + i, y + i) == color) break;
+                int i =1;
+                while (x+i<8&&y+i<8) {
+                    if (checkBoardPosition(x+i,y+i) == color)break;
                     result.add(new Point2D(x + i, y + i));
-                    if (checkBoardPosition(x + i, y + i) != Color.NULL) break;
+                    if (checkBoardPosition(x+i,y+i)!=Color.NULL)break;
+                    i++;
                 }
-                for (int i = 0; i < 8; i++) {
-                    if (checkBoardPosition(x - i, y + i) == color) break;
+                i=1;
+                while (x-i>=0&&y+i<8) {
+                    if (checkBoardPosition(x-i,y+i) == color)break;
                     result.add(new Point2D(x - i, y + i));
-                    if (checkBoardPosition(x - i, y + i) != Color.NULL) break;
+                    if (checkBoardPosition(x-i,y+i)!=Color.NULL)break;
+                    i++;
                 }
-                for (int i = 0; i < 8; i++) {
-                    if (checkBoardPosition(x + i, y - i) == color) break;
-                    result.add(new Point2D(x + i, y - i));
-                    if (checkBoardPosition(x + i, y - i) != Color.NULL) break;
-                }
-                for (int i = 0; i < 8; i++) {
-                    if (checkBoardPosition(x - i, y - i) == color) break;
+                i=1;
+                while (x-i>=0&&y-i>=0) {
+                    if (checkBoardPosition(x-i,y-i) == color)break;
                     result.add(new Point2D(x - i, y - i));
-                    if (checkBoardPosition(x - i, y - i) != Color.NULL) break;
+                    if (checkBoardPosition(x-i,y-i)!=Color.NULL)break;
+                    i++;
                 }
+                i=1;
+                while (x+i<8&&y-i>=0) {
+                    if (checkBoardPosition(x+i,y-i) == color)break;
+                    result.add(new Point2D(x + i, y - i));
+                    if (checkBoardPosition(x+i,y-i)!=Color.NULL)break;
+                    i++;
+                }
+                break;
             }
             case WANG:{
                 result.add(new Point2D(x + 1, y + 1));
