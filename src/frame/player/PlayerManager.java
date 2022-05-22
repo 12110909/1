@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class PlayerManager {
     private static Player[] players = new Player[2];
-    private static int currentPlayer = 0;
+    private static int currentPlayer = 1;
     private static final Map<String, PlayerInfo> playerInfoMap;
 
     static {
@@ -113,7 +113,7 @@ public class PlayerManager {
 
     public static void reset() {
         reviveAllPlayers();
-        currentPlayer = 0;
+        currentPlayer = 1;
     }
 
     public static PlayerInfo getPlayerInfo(String name) {
