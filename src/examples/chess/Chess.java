@@ -6,6 +6,7 @@ import frame.action.ActionPerformType;
 import frame.board.BaseGrid;
 import frame.event.BoardChangeEvent;
 import frame.event.EventCenter;
+import frame.player.AIPlayer;
 import frame.player.PlayerManager;
 import frame.util.Point2D;
 import frame.view.View;
@@ -24,6 +25,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
+
+import static java.lang.Math.abs;
 
 public class Chess {
     // 全局变量
@@ -164,6 +168,17 @@ public class Chess {
             // 如果都不能走则平局。
             return true;
         });
+
+        AIPlayer.addAIType("France", (id) -> {
+            return new AIPlayer(id, "France", 200) {
+                @Override
+                protected boolean calculateNextMove() {
+                    surrender();
+                    return true;
+                }
+            };
+        });
+
         try {
             Image image = ImageIO.read(new File("src/examples/chess/chessBoard(1).jpg"));
             Image image2 = ImageIO.read(new File("src/examples/chess/chessImage.jpg"));

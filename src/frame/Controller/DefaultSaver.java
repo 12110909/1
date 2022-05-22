@@ -36,6 +36,7 @@ public class DefaultSaver extends Saver {
 
     @Override
     public void save(String path) throws IOException {
+
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path));
         out.writeObject(new Save(Game.boardClass, Game.actionStack));
         out.close();
