@@ -169,8 +169,6 @@ public class Chess {
             return true;
         });
 
-
-
         AIPlayer.addAIType("RuoZHI", (id) -> {
             return new AIPlayer(id, "RuoZHI", 200) {
                 @Override
@@ -179,6 +177,13 @@ public class Chess {
                     return true;
                 }
             };
+        });
+
+        Game.setInitFunction(() -> {
+            isSelecting = false;
+            selectedPiece = null;
+            availablePositions = new ArrayList<>();
+            lastRemovedPieceType = null;
         });
 
         try {
@@ -323,10 +328,6 @@ public class Chess {
         // 重置，框架的部分调用Game.init()就行。不过还要重置全局变量。
         JButton reset = new JButton("Reset");
         reset.addActionListener((e) -> {
-            isSelecting = false;
-            selectedPiece = null;
-            availablePositions = new ArrayList<>();
-            lastRemovedPieceType = null;
             Game.init();
         });
 
