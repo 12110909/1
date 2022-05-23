@@ -25,9 +25,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 
-import static java.lang.Math.abs;
 
 public class Chess {
     // 全局变量
@@ -61,10 +59,12 @@ public class Chess {
         Game.setMaximumPlayer(2);
         View.setName("Chess Game");
         Game.setBoardSize(8, 8);
+
+        Game.saver =new CustomSaver();//自定义存档工具
         Game.saver.checkSize(true); // 读档时检查存档棋盘大小
         Game.saver.setSlotNumber(5); // 存档数量..
 
-//        AudioPlayer.playBgm("src/examples/chess/chess.wav");
+        AudioPlayer.playBgm("src/examples/chess/chess.wav");
 
         Game.registerBoard(Board.class);
 
@@ -169,8 +169,10 @@ public class Chess {
             return true;
         });
 
-        AIPlayer.addAIType("France", (id) -> {
-            return new AIPlayer(id, "France", 200) {
+
+
+        AIPlayer.addAIType("RuoZHI", (id) -> {
+            return new AIPlayer(id, "RuoZHI", 200) {
                 @Override
                 protected boolean calculateNextMove() {
                     surrender();

@@ -11,8 +11,8 @@ import java.util.Map;
 
 public class DefaultSaver extends Saver {
 
-    private Save loadedSave = null;
-    private boolean checkSize = false;
+    protected Save loadedSave = null;
+    protected boolean checkSize = false;
 
     public DefaultSaver() {
 
@@ -36,7 +36,6 @@ public class DefaultSaver extends Saver {
 
     @Override
     public void save(String path) throws IOException {
-
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path));
         out.writeObject(new Save(Game.boardClass, Game.actionStack));
         out.close();
