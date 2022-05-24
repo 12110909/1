@@ -25,6 +25,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class Chess {
@@ -64,7 +65,7 @@ public class Chess {
         Game.saver.checkSize(true); // 读档时检查存档棋盘大小
         Game.saver.setSlotNumber(5); // 存档数量..
 
-        AudioPlayer.playBgm("src/examples/chess/chess.wav");
+//        AudioPlayer.playBgm("src/examples/chess/chess.wav");
 
         Game.registerBoard(Board.class);
 
@@ -178,6 +179,23 @@ public class Chess {
                 }
             };
         });
+
+//        AIPlayer.addAIType("SuiJI", (id) -> {
+//            return new AIPlayer(id, "SuiJI", 200) {
+//                @Override
+//                protected boolean calculateNextMove() {
+//                    Random random = new Random();
+//                    for (int i = 0; i < 100; i++) {
+//                        int x = (int) (Math.random() * (8));
+//                        int y = (int) (Math.random() * (8));
+//                        if (Color.values()[Game.getBoard().getGrid(x,y)].name() == Color.values()[Game.getCurrentPlayerIndex()].name()){
+//
+//                        }
+//                    }
+//                    return false;
+//                }
+//            };
+//        });
 
         Game.setInitFunction(() -> {
             isSelecting = false;

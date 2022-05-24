@@ -3,13 +3,11 @@ package examples.chess;
 import frame.Controller.DefaultSaver;
 import frame.Controller.Game;
 import frame.save.Save;
-import frame.save.Saver;
 import frame.save.UnmatchedSizeException;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 // 自定义Saver
 public class CustomSaver extends DefaultSaver {
@@ -24,11 +22,12 @@ public class CustomSaver extends DefaultSaver {
             if (!loadedSave.boardClass.equals(Board.class)) throw new ClassNotFoundException();
             if (checkSize && (loadedSave.height != Game.getHeight() || loadedSave.width != Game.getWidth()))
                 throw new UnmatchedSizeException(Game.getWidth(), Game.getHeight(), loadedSave.width, loadedSave.height);
+
         } catch (ClassCastException ignored) {
             throw new ClassNotFoundException();
         }
         // 读出之前存的数据。如果想阻止读档，抛出异常，把loadedSave设为null
-//        loadedSave = null;
+//       loadedSave = null;
         Scanner scanner = new Scanner(fileInputStream);
         System.out.println(scanner.nextLine());
         System.out.println(scanner.nextLine());
